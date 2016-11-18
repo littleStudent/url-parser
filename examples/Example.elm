@@ -27,7 +27,7 @@ type alias Model =
 
 init : Navigation.Location -> ( Model, Cmd Msg )
 init location =
-  ( Model [Url.parsePath route location]
+  ( Model [Url.parseHash route location]
   , Cmd.none
   )
 
@@ -69,7 +69,7 @@ update msg model =
       )
 
     UrlChange location ->
-      ( { model | history = Url.parsePath route location :: model.history }
+      ( { model | history = Url.parseHash route location :: model.history }
       , Cmd.none
       )
 
@@ -91,7 +91,7 @@ view : Model -> Html Msg
 view model =
   div []
     [ h1 [] [ text "Links" ]
-    , ul [] (List.map viewLink [ "/", "/blog/", "/blog/42", "/blog/37", "/blog/?search=cats" ])
+    , ul [] (List.map viewLink [ "/#/", "/#/blog/", "/#/blog/42", "/#/blog/37", "/#/blog/?search=cats" ])
     , h1 [] [ text "History" ]
     , ul [] (List.map viewRoute model.history)
     ]
